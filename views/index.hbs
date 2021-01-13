@@ -1,0 +1,159 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+<script src="jquery-3.5.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="icon" href="Favicon.png">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <title>LOGIN PAGE</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">CARS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"><span class="sr-only">logout</span></a>
+        </li>
+       
+    </nav>
+
+    <div style="padding-top: 8%;">
+
+<main class="login-form">
+    <div class="cotainer">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    {{!-- <div class="card-header">Login</div> --}}
+                    <div class="card-body">
+                        <form action="/home" method="POST" id="form-login" onsubmit="return letmein()" >
+                            <div class="form-group row">
+                                <label for="name" class=" col-md-4 col-form-label text-md-right " >User Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="name" class="form-control" name="name" >
+                                </div>
+                                 <div id="error1" style="display: none; text-align:center; color: red;">
+                                    <p>*Please enter a username</p>
+                                </div>
+                           
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="password" class="form-control" name="password" >
+                                </div>
+                                <div id="error2" style="display: none; text-align: center; color: red;">
+                                    <p>*Please enter a password</p>
+                                </div>
+                                
+                              
+                            </div>
+                             <div id="error" style="display: none; text-align: center; color: red;">
+                                    <p>*Incorrect username or password</p>
+                                </div>
+
+
+                            <div class="col-md-6 offset-md-4">
+                                 <button type="submit" class="btn btn-primary" id="submit">Login</button>
+                                    {{!-- Register --}}
+                                {{!-- </button> --}}
+                                {{!-- <a href="#" class="btn btn-link"> --}}
+                                    {{!-- Forgot Your Password? --}}
+                                {{!-- </a> --}}
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</main>
+
+
+
+
+
+<script>
+            $('#form-login').submit((e) => {
+                e.preventDefault()
+                let name = $('#name').val()
+                let password = $('#password').val()
+                $.ajax({
+                    url: "/home",
+                    method: "post",
+                    data: {
+                        name,
+                        password
+                    },
+                    success: (response) => {
+                        if(response.status){
+                            location.href='/home'
+                        }else if(name==""){
+                            console.log("")
+                            $('#error1').show()
+                        }
+                        else if(password==""){
+                            $('#error2').show()
+                        }
+                        else
+                        {
+
+                            $('#error').show()
+                        }
+                    }
+                })
+            })
+        </script>
+
+<script>
+    $(document).ready(function(){
+$('#form-login').validate({
+    rules:{
+        name:{
+            required:true,
+            minlength:4
+        },
+        password:{
+            required:true,
+            minlength:4
+        }
+    }
+})
+
+    })
+</script>
+
+
+</body>
+</html>
